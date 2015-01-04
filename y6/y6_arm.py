@@ -1,6 +1,8 @@
 from solid import *
 from solid.utils import *
 
+from rc import rotor
+
 from config import *
 from y6_body import body_outer, body_outer_cutout
 
@@ -33,6 +35,10 @@ def arms():
 
 def holes():
     return [rotate(arm_angle * i)(y6_arm_hole()) for i in range(n_arms)]
+
+def rotors():
+    return [rotate(arm_angle * i)
+            (right(arm_len + body_inner_r)(rotor.rotor(prop))) for i in range(n_arms)]
 
 
 if __name__ == "__main__":

@@ -1,9 +1,11 @@
 from solid import *
 from solid.utils import *
 
-from rc import bat
+from rc import bat, control, powerdist
 from y6_body import y6_body
-from y6_arm import arms
+from y6_arm import arms, rotors
+from y6_bat import bat_holders
+from landing import landing
 
 from config import *
 
@@ -17,11 +19,16 @@ META = {
 
 def y6():
     return union()([
-        background(y6_body()),
+        (y6_body()),
         arms(),
-        background(
-            down(body_outer_h + 9)(bat.generic_battery_model(112, 35, 18))
+        (
+            down(body_outer_h + 16)(bat.generic_battery_model(112, 35, 18))
         ),
+        down(2)(bat_holders()),
+        (down(12)(landing())),
+        up(20)(rotors()),
+        up(10)(control.kk20()),
+        up(2)(powerdist.mini_power_board()),
     ])
 
 

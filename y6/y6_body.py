@@ -34,14 +34,17 @@ def body_inner():
             cylinder(r=body_inner_r - body_inner_ring_w, h=body_inner_h + 100, center=True))
     )
 
-def mounting_holes_ring(r, num, offset, rot_offset=0):
+def mounting_holes_ring(r, num, offset, rot_offset=0, obj=None):
     holes = []
     angle = 360. / num
+    if obj is None:
+        obj = cylinder(r=r, h=100, center=True)
+
     for i in range(num):
         holes.append(
                 rotate([0, 0, i * angle + rot_offset]) (
                     translate([0, offset, 0])(
-                        cylinder(r=r, h=100, center=True))
+                        obj)
                     )
                 )
 
@@ -50,15 +53,20 @@ def mounting_holes_ring(r, num, offset, rot_offset=0):
 
 import y6_arm
 
+def body_holes():
+    return union()([
+        mounting_holes_ring(m3_hole_r, holes_outer_num, holes_outer_offset),
+        mounting_holes_ring(m3_hole_r, holes_inner_num, holes_inner_offset,
+            rot_offset=45),
+    ])
+
 def y6_body():
     return union()([
        #background(rotate(-90)(import_stl('/home/rmarko/hs/reprap/prints/y6/Logicflight_Y6m_-_Simplest__Durable_mini_Drone/bodyfix.stl'))),
         body_outer(),
         body_inner(),
     ]) - union()([
-        mounting_holes_ring(m3_hole_r, holes_outer_num, holes_outer_offset),
-        mounting_holes_ring(m3_hole_r, holes_inner_num, holes_inner_offset,
-            rot_offset=45),
+        body_holes(),
         y6_arm.holes(),
     ])
 

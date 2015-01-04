@@ -24,10 +24,10 @@ TNA,nano-tech,Lipo,2,1,2200,25,50,5,112,35,18,133,XT60,tnt
 def generic_battery_model(length, height, width):
     corner = rotate([90, 0, 0])(cylinder(r=width / 2, h=height, center=True))
 
-    return hull()(
+    return color([0, 0, 0.5, 0.5])(hull()(
         [translate([i * (length / 2 - width / 2), 0, 0])(corner)
          for i in [-1, 1]]
-    )
+    ))
 
 
 if __name__ == "__main__":
