@@ -20,8 +20,9 @@ def landing_horiz_part():
     )
 
 def landing_cylinder():
-    r = 20
-    r_sub = 4
+    r = landing_cylinder_r
+    r_sub = landing_d
+
     return (
         translate([landing_w / 2 - 0., landing_offset + landing_h/2., -r])(
             rotate([90, 0, 0])(
@@ -30,16 +31,10 @@ def landing_cylinder():
             )
         ))
 
-def landing_leg():
-    body = landing_cylinder()
-    return body
-            #- translate([4 - landing_w/2 , 0, -r - 30])(
-            #    (cube([50, 50, 50]))
-
 def landing_part():
     body = (
-            landing_leg()
-            + mirror([1, 0, 0])(landing_leg())
+            landing_cylinder()
+            + mirror([1, 0, 0])(landing_cylinder())
             - hull()(
                 translate([0, landing_offset, -landing_d / 2])(
                     scale([1, 1.1, 1.1])(
@@ -54,8 +49,9 @@ def landing_part():
             )
 
     # nut holes
-    body -= down(4.1)(union()([mounting_holes_ring(m3_hole_r*2, holes_outer_num,
-                holes_outer_offset, obj=nut_hole(3))]))
+    if landing_nut_holes:
+        body -= down(4.1)(union()([mounting_holes_ring(m3_hole_r*2, holes_outer_num,
+                    holes_outer_offset, obj=nut_hole(3))]))
 
 
     if closed_loop:

@@ -43,6 +43,11 @@ landing_w = 54
 landing_h = 8
 landing_d = 4
 landing_offset = 22
-landing_down_offset = 36
+landing_down_offset = 56
+landing_cylinder_r = 30
 
+# closed loop landing
 closed_loop = not True
+
+# disabled by default as they make the landing much weaker (needs work..)
+landing_nut_holes = False

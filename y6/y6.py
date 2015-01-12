@@ -1,7 +1,7 @@
 from solid import *
 from solid.utils import *
 
-from rc import bat, control, powerdist
+from rc import bat, control, powerdist, spacer
 from y6_body import y6_body
 from y6_arm import arms, rotors
 from y6_bat import bat_holders
@@ -28,6 +28,7 @@ def y6():
         (down(12)(landing())),
         up(20)(rotors()),
         up(10)(control.kk20()),
+        spacer.spacer(12),
         up(2)(powerdist.mini_power_board()),
     ])
 
